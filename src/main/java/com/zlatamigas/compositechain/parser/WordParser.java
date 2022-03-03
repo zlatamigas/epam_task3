@@ -1,14 +1,17 @@
 package com.zlatamigas.compositechain.parser;
 
+import com.zlatamigas.compositechain.entity.ComplexTextComponent;
+import com.zlatamigas.compositechain.entity.ComplexTextComponentType;
 import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.impl.Symbol;
-import com.zlatamigas.compositechain.entity.impl.Word;
 
 public class WordParser extends AbstractParserHandler {
 
+    private static final ComplexTextComponentType COMPONENT_TYPE = ComplexTextComponentType.WORD;
+
     @Override
     public void handleParse(TextComponent component, String strToParse) {
-        Word word = (Word) component;
+        ComplexTextComponent word = (ComplexTextComponent) component;
 
         for(char symbol : strToParse.toCharArray()){
             word.addComponent(new Symbol(symbol));

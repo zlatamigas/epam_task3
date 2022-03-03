@@ -4,16 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class AbstractComplexTextComponent implements TextComponent {
+public class ComplexTextComponent implements TextComponent {
 
     private List<TextComponent> components;
+    private ComplexTextComponentType type;
 
-    public AbstractComplexTextComponent(){
+    public ComplexTextComponent(ComplexTextComponentType type){
+        this.type = type;
         components = new ArrayList<>();
     }
 
-    public AbstractComplexTextComponent(List<TextComponent> components) {
-        this.components = components;
+    public ComplexTextComponentType getType() {
+        return type;
+    }
+
+    public void setType(ComplexTextComponentType type) {
+        this.type = type;
     }
 
     @Override
