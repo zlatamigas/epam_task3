@@ -1,14 +1,12 @@
 package com.zlatamigas.compositechain.parser;
 
-import com.zlatamigas.compositechain.entity.ComplexTextComponent;
+import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
 import com.zlatamigas.compositechain.entity.ComplexTextComponentType;
 import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.impl.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class SentenceParser extends AbstractParserHandler {
 

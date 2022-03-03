@@ -1,4 +1,7 @@
-package com.zlatamigas.compositechain.entity;
+package com.zlatamigas.compositechain.entity.impl;
+
+import com.zlatamigas.compositechain.entity.ComplexTextComponentType;
+import com.zlatamigas.compositechain.entity.TextComponent;
 
 import java.util.ArrayList;
 import java.util.Iterator;

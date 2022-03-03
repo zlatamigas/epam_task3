@@ -1,6 +1,6 @@
 package com.zlatamigas.compositechain.parser;
 
-import com.zlatamigas.compositechain.entity.ComplexTextComponent;
+import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
 import com.zlatamigas.compositechain.entity.ComplexTextComponentType;
 import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.impl.Symbol;
