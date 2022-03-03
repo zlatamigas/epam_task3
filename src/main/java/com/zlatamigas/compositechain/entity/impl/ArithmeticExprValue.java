@@ -3,6 +3,7 @@ package com.zlatamigas.compositechain.entity.impl;
 import com.zlatamigas.compositechain.entity.TextComponent;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 public class ArithmeticExprValue implements TextComponent {
 
@@ -33,5 +34,27 @@ public class ArithmeticExprValue implements TextComponent {
     @Override
     public Iterator<TextComponent> iterator() {
         throw new UnsupportedOperationException("ArithmeticExpressionValue cannot iterate over not existing subcomponents.");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ArithmeticExprValue that = (ArithmeticExprValue) o;
+        return Double.compare(that.value, value) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return Double.toString(value);
     }
 }

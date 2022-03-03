@@ -34,4 +34,9 @@ public class Symbol implements TextComponent {
     public Iterator<TextComponent> iterator() {
         throw new UnsupportedOperationException("Symbol cannot iterate over not existing subcomponents.");
     }
+
+    @Override
+    public String toString() {
+        return Character.toString(symbol);
+    }
 }
