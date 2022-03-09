@@ -12,7 +12,7 @@ public enum ArithmeticOperationType {
     private final char operation;
     private final int priority;
 
-    ArithmeticOperationType(char operation, int priority){
+    ArithmeticOperationType(char operation, int priority) {
         this.operation = operation;
         this.priority = priority;
     }
@@ -25,17 +25,10 @@ public enum ArithmeticOperationType {
         return priority;
     }
 
-    public static boolean isArithmeticOperation(char arithmeticOperation){
-        return ADD.operation == arithmeticOperation
-                || SUBTRACT.operation == arithmeticOperation
-                || MULTIPLY.operation == arithmeticOperation
-                || DIVIDE.operation == arithmeticOperation;
-    }
-
-    public static ArithmeticOperationType getOperationType(char operation){
-        for(ArithmeticOperationType operationType : values()){
-            if (operationType.operation == operation){
-                return  operationType;
+    public static ArithmeticOperationType getOperationType(char operation) {
+        for (ArithmeticOperationType operationType : values()) {
+            if (operationType.operation == operation) {
+                return operationType;
             }
         }
 

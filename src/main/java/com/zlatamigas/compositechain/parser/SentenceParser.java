@@ -4,8 +4,7 @@ import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.TextComponentType;
 import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
 import com.zlatamigas.compositechain.entity.impl.SimpleTextComponent;
-import com.zlatamigas.compositechain.util.CountArithmeticExpression;
-import com.zlatamigas.compositechain.util.impl.CountArithmeticExpressionImpl;
+import com.zlatamigas.compositechain.util.CalculateArithmeticExpression;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,11 +15,8 @@ public class SentenceParser extends AbstractParserHandler {
     public static final String LEXEME_PARTS_REGEX =
             "([a-zA-Z]+(-[a-zA-Z]+)*)|([-!?.,':()]+(?=$|[a-zA-Z]))|(^-?[\\d()]+(?=[^a-zA-Z])[-/\\d()+*]*)";
 
-    private CountArithmeticExpression arithmeticExpressionCounter;
-
     public SentenceParser() {
         super(new WordParser());
-        arithmeticExpressionCounter = new CountArithmeticExpressionImpl();
     }
 
     @Override
@@ -54,7 +50,8 @@ public class SentenceParser extends AbstractParserHandler {
                 } else if (matcher.group(4) != null) {
 
                     str = matcher.group(4);
-                    double value = arithmeticExpressionCounter.count(str);
+                    CalculateArithmeticExpression arithmeticExpressionCounter = new CalculateArithmeticExpression(str);
+                    double value = arithmeticExpressionCounter.calculate();
                     simpleTextValue = new SimpleTextComponent(TextComponentType.ARITHMETIC_EXCEPTION_VALUE, Double.toString(value));
                     sentence.addComponent(simpleTextValue);
                 }

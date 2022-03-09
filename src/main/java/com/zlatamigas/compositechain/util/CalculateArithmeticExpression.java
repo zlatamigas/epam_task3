@@ -1,28 +1,39 @@
-package com.zlatamigas.compositechain.util.impl;
+package com.zlatamigas.compositechain.util;
 
-import com.zlatamigas.compositechain.util.ArithmeticOperationType;
-import com.zlatamigas.compositechain.util.CountArithmeticExpression;
+import com.zlatamigas.compositechain.util.interpreter.*;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class CountArithmeticExpressionImpl implements CountArithmeticExpression {
+public class CalculateArithmeticExpression {
 
     private static final String DIGITS_REGEX = "\\d+";
+    private static final String VALUES_DELIMITER = " ";
 
-    @Override
-    public double count(String arithmeticExpressionStr) {
+    private ArrayList<AbstractArithmeticExpression> listExpressions;
 
-        ArrayList<String> polNotation = convertToPolNotation(arithmeticExpressionStr);
-
-        return countPolNotation(polNotation);
+    public CalculateArithmeticExpression(String arithmeticExpressionStr) {
+        listExpressions = new ArrayList<>();
+        String polNotation = convertToPolishNotation(arithmeticExpressionStr);
+        parsePolishNotation(polNotation);
     }
 
-    private ArrayList<String> convertToPolNotation(String arithmeticExpressionStr) {
-        ArrayList<String> polNotation = new ArrayList<>();
+    public double calculate() {
+
+        Stack<Double> valuesStack = new Stack<>();
+        for (AbstractArithmeticExpression expression : listExpressions) {
+            expression.interpret(valuesStack);
+        }
+
+        return valuesStack.pop();
+    }
+
+    private String convertToPolishNotation(String arithmeticExpressionStr) {
+
+        StringBuilder polNotation = new StringBuilder("");
         Stack<ArithmeticOperationType> operationsStack = new Stack<>();
 
-        StringBuffer currentNumber = new StringBuffer();
+        StringBuilder currentNumber = new StringBuilder();
         boolean isNumber = false;
 
         String stackOperation;
@@ -41,7 +52,7 @@ public class CountArithmeticExpressionImpl implements CountArithmeticExpression 
             }
 
             if (isNumber) {
-                polNotation.add(currentNumber.toString());
+                polNotation.append(currentNumber).append(VALUES_DELIMITER);
                 currentNumber.delete(0, currentNumber.length());
                 isNumber = false;
             }
@@ -68,7 +79,6 @@ public class CountArithmeticExpressionImpl implements CountArithmeticExpression 
                     operationsStack.push(type);
                     continue;
                 }
-
             }
 
             if (priority == 1) {
@@ -77,7 +87,7 @@ public class CountArithmeticExpressionImpl implements CountArithmeticExpression 
                 while (!operationsStack.empty()) {
                     if (operationsStack.peek().getPriority() >= priority) {
                         stackOperation = Character.toString(operationsStack.pop().getOperation());
-                        polNotation.add(stackOperation);
+                        polNotation.append(stackOperation).append(VALUES_DELIMITER);
                     } else {
                         break;
                     }
@@ -86,67 +96,56 @@ public class CountArithmeticExpressionImpl implements CountArithmeticExpression 
             } else if (priority == -1) {
                 while (operationsStack.peek() != ArithmeticOperationType.BRACKET_OPEN) {
                     stackOperation = Character.toString(operationsStack.pop().getOperation());
-                    polNotation.add(stackOperation);
+                    polNotation.append(stackOperation).append(VALUES_DELIMITER);
                 }
                 operationsStack.pop();
             }
-
         }
 
         if (isNumber) {
-            polNotation.add(currentNumber.toString());
+            polNotation.append(currentNumber).append(VALUES_DELIMITER);
         }
 
         while (!operationsStack.empty()) {
             stackOperation = Character.toString(operationsStack.pop().getOperation());
-            polNotation.add(stackOperation);
+            polNotation.append(stackOperation).append(VALUES_DELIMITER);
         }
 
-        return polNotation;
+        return polNotation.toString();
     }
 
-    private double countPolNotation(ArrayList<String> polNotation) {
-        Stack<Double> valuesStack = new Stack<>();
+    private void parsePolishNotation(String polNotation) {
 
         ArithmeticOperationType type;
-        String currentValue;
-        double value1, value2, valueResult = 0;
+        polNotation = polNotation.trim();
 
-        for (int i = 0; i < polNotation.size(); i++) {
-            currentValue = polNotation.get(i);
+        for (String currentValue : polNotation.split(VALUES_DELIMITER)) {
 
             if (currentValue.matches(DIGITS_REGEX)) {
-                valuesStack.push(Double.parseDouble(currentValue));
+                listExpressions.add(new NonTerminalExpressionNumber(Double.parseDouble(currentValue)));
             } else {
 
                 type = ArithmeticOperationType.getOperationType(currentValue.charAt(0));
 
-                if (type == ArithmeticOperationType.UNARY_MINUS) {
-                    valueResult = valuesStack.pop();
-                    valuesStack.push(-valueResult);
-                } else {
-                    value1 = valuesStack.pop();
-                    value2 = valuesStack.pop();
-                    switch (type) {
-                        case ADD:
-                            valueResult = value2 + value1;
-                            break;
-                        case SUBTRACT:
-                            valueResult = value2 - value1;
-                            break;
-                        case MULTIPLY:
-                            valueResult = value2 * value1;
-                            break;
-                        case DIVIDE:
-                            valueResult = value2 / value1;
-                            break;
-                    }
-                    valuesStack.push(valueResult);
+                switch (type) {
+                    case ADD:
+                        listExpressions.add(new TerminalExpressionAdd());
+                        break;
+                    case SUBTRACT:
+                        listExpressions.add(new TerminalExpressionSubstract());
+                        break;
+                    case MULTIPLY:
+                        listExpressions.add(new TerminalExpressionMultiply());
+                        break;
+                    case DIVIDE:
+                        listExpressions.add(new TerminalExpressionDivide());
+                        break;
+                    case UNARY_MINUS:
+                        listExpressions.add(new TerminalExpressionUnaryMinus());
+                        break;
                 }
             }
         }
 
-
-        return valuesStack.pop();
     }
 }
