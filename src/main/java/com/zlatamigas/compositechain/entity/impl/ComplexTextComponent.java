@@ -26,6 +26,15 @@ public class ComplexTextComponent implements TextComponent {
         this.type = type;
     }
 
+    public List<TextComponent> getComponents() {
+        return components;
+    }
+
+    @Override
+    public int size(){
+        return components.size();
+    }
+
     @Override
     public boolean addComponent(TextComponent component) {
         return components.add(component);

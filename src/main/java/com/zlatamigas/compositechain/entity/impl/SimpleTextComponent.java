@@ -20,13 +20,17 @@ public class SimpleTextComponent implements TextComponent {
         return simpleTextComponent;
     }
 
-
     public TextComponentType getType() {
         return type;
     }
 
     public void setType(TextComponentType type) {
         this.type = type;
+    }
+
+    @Override
+    public int size() {
+        return 1;
     }
 
     @Override
