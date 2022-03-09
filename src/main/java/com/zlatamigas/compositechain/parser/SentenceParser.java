@@ -1,22 +1,26 @@
 package com.zlatamigas.compositechain.parser;
 
-import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
-import com.zlatamigas.compositechain.entity.ComplexTextComponentType;
 import com.zlatamigas.compositechain.entity.TextComponent;
-import com.zlatamigas.compositechain.entity.impl.*;
+import com.zlatamigas.compositechain.entity.TextComponentType;
+import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
+import com.zlatamigas.compositechain.entity.impl.SimpleTextComponent;
+import com.zlatamigas.compositechain.util.CountArithmeticExpression;
+import com.zlatamigas.compositechain.util.impl.CountArithmeticExpressionImpl;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SentenceParser extends AbstractParserHandler {
 
-    private static final ComplexTextComponentType COMPONENT_TYPE = ComplexTextComponentType.SENTENCE;
-
     public static final String SENTENCE_DELIMITER = " ";
-    public static final String LEXEME_PARTS_REGEX = "(\\w+-?\\w*)|(\\p{Punct}+$)|(-?[\\d(]+[\\d()-+/\\*]*)";
+    public static final String LEXEME_PARTS_REGEX =
+            "([a-zA-Z]+(-[a-zA-Z]+)*)|([-!?.,':()]+(?=$|[a-zA-Z]))|(^-?[\\d()]+(?=[^a-zA-Z])[-/\\d()+*]*)";
+
+    private CountArithmeticExpression arithmeticExpressionCounter;
 
     public SentenceParser() {
         super(new WordParser());
+        arithmeticExpressionCounter = new CountArithmeticExpressionImpl();
     }
 
     @Override
@@ -24,8 +28,7 @@ public class SentenceParser extends AbstractParserHandler {
         ComplexTextComponent sentence = (ComplexTextComponent) component;
 
         ComplexTextComponent word;
-        PunctuationMark punctuationMark;
-        ArithmeticExprValue arithmeticExprValue;
+        SimpleTextComponent simpleTextValue;
 
         Pattern patternLexeme = Pattern.compile(LEXEME_PARTS_REGEX);
         Matcher matcher;
@@ -33,28 +36,27 @@ public class SentenceParser extends AbstractParserHandler {
         String[] wordStrs = strToParse.split(SENTENCE_DELIMITER);
         for (String str : wordStrs) {
 
-
             matcher = patternLexeme.matcher(str);
             while (matcher.find()) {
                 if (matcher.group(1) != null) {
 
                     str = matcher.group(1);
-                    word = new ComplexTextComponent(COMPONENT_TYPE);
+                    word = new ComplexTextComponent(TextComponentType.WORD);
                     successor.handleParse(word, str);
-                    sentence.addComponent(sentence);
-
-                } else if (matcher.group(2) != null) {
-
-                    str = matcher.group(2);
-                    punctuationMark = new PunctuationMark(str);
-                    sentence.addComponent(punctuationMark);
+                    sentence.addComponent(word);
 
                 } else if (matcher.group(3) != null) {
 
                     str = matcher.group(3);
-                    //converter!!
-                    //arithmeticExprValue = new ArithmeticExprValue(Double.parseDouble(str));
-                    //sentence.addComponent(arithmeticExprValue);
+                    simpleTextValue = new SimpleTextComponent(TextComponentType.PUNCTUATION_MARK, str);
+                    sentence.addComponent(simpleTextValue);
+
+                } else if (matcher.group(4) != null) {
+
+                    str = matcher.group(4);
+                    double value = arithmeticExpressionCounter.count(str);
+                    simpleTextValue = new SimpleTextComponent(TextComponentType.ARITHMETIC_EXCEPTION_VALUE, Double.toString(value));
+                    sentence.addComponent(simpleTextValue);
                 }
             }
         }

@@ -1,6 +1,6 @@
 package com.zlatamigas.compositechain.entity.impl;
 
-import com.zlatamigas.compositechain.entity.ComplexTextComponentType;
+import com.zlatamigas.compositechain.entity.TextComponentType;
 import com.zlatamigas.compositechain.entity.TextComponent;
 
 import java.util.ArrayList;
@@ -11,18 +11,18 @@ import java.util.Objects;
 public class ComplexTextComponent implements TextComponent {
 
     private List<TextComponent> components;
-    private ComplexTextComponentType type;
+    private TextComponentType type;
 
-    public ComplexTextComponent(ComplexTextComponentType type) {
+    public ComplexTextComponent(TextComponentType type) {
         this.type = type;
         components = new ArrayList<>();
     }
 
-    public ComplexTextComponentType getType() {
+    public TextComponentType getType() {
         return type;
     }
 
-    public void setType(ComplexTextComponentType type) {
+    public void setType(TextComponentType type) {
         this.type = type;
     }
 
@@ -56,5 +56,15 @@ public class ComplexTextComponent implements TextComponent {
     @Override
     public int hashCode() {
         return Objects.hash(components, type);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder(type.getPrefix());
+        for(TextComponent textComponent : components){
+            sb.append(textComponent);
+        }
+        sb.append(type.getPostfix());
+        return sb.toString();
     }
 }

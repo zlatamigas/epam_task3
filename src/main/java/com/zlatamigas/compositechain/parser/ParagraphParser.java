@@ -1,7 +1,7 @@
 package com.zlatamigas.compositechain.parser;
 
 import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
-import com.zlatamigas.compositechain.entity.ComplexTextComponentType;
+import com.zlatamigas.compositechain.entity.TextComponentType;
 import com.zlatamigas.compositechain.entity.TextComponent;
 
 import java.util.regex.Matcher;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class ParagraphParser extends AbstractParserHandler {
 
-    private static final ComplexTextComponentType COMPONENT_TYPE = ComplexTextComponentType.PARAGRAPH;
+    private static final TextComponentType COMPONENT_TYPE = TextComponentType.SENTENCE;
 
     public static final String SENTENCE_REGEX = "([^.!?]+[.!?])";
 
