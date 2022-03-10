@@ -1,6 +1,6 @@
-package com.zlatamigas.compositechain.util;
+package com.zlatamigas.compositechain.interpreter;
 
-import com.zlatamigas.compositechain.util.interpreter.*;
+import com.zlatamigas.compositechain.expression.*;
 
 import java.util.ArrayList;
 import java.util.Stack;

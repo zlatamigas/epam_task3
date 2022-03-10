@@ -1,4 +1,4 @@
-package com.zlatamigas.compositechain.util;
+package com.zlatamigas.compositechain.interpreter;
 
 public enum ArithmeticOperationType {
     ADD('+', 2),

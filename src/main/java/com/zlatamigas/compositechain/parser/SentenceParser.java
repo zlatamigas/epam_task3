@@ -4,7 +4,7 @@ import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.TextComponentType;
 import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
 import com.zlatamigas.compositechain.entity.impl.SimpleTextComponent;
-import com.zlatamigas.compositechain.util.CalculateArithmeticExpression;
+import com.zlatamigas.compositechain.interpreter.CalculateArithmeticExpression;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
