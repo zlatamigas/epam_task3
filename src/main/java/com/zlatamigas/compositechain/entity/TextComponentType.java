@@ -1,11 +1,11 @@
 package com.zlatamigas.compositechain.entity;
 
 public enum TextComponentType {
-    TEXT(),
+    TEXT,
     PARAGRAPH("\t", "\n"),
-    SENTENCE(),
+    SENTENCE,
     WORD(" "),
-    SYMBOL(),
+    SYMBOL,
     PUNCTUATION_MARK(" "),
     ARITHMETIC_EXCEPTION_VALUE(" ");
 
