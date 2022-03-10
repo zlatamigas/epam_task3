@@ -1,12 +1,11 @@
 package com.zlatamigas.compositechain.entity.impl;
 
-import com.zlatamigas.compositechain.entity.TextComponentType;
 import com.zlatamigas.compositechain.entity.TextComponent;
+import com.zlatamigas.compositechain.entity.TextComponentType;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class ComplexTextComponent implements TextComponent {
 
@@ -31,7 +30,7 @@ public class ComplexTextComponent implements TextComponent {
     }
 
     @Override
-    public int size(){
+    public int size() {
         return components.size();
     }
 
@@ -64,13 +63,16 @@ public class ComplexTextComponent implements TextComponent {
 
     @Override
     public int hashCode() {
-        return Objects.hash(components, type);
+        int result = 1;
+        result = 31 * result + components.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder(type.getPrefix());
-        for(TextComponent textComponent : components){
+        for (TextComponent textComponent : components) {
             sb.append(textComponent);
         }
         sb.append(type.getPostfix());

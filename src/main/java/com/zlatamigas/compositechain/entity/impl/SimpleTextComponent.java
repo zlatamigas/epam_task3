@@ -4,7 +4,6 @@ import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.TextComponentType;
 
 import java.util.Iterator;
-import java.util.Objects;
 
 public class SimpleTextComponent implements TextComponent {
 
@@ -57,12 +56,15 @@ public class SimpleTextComponent implements TextComponent {
             return false;
         }
         SimpleTextComponent that = (SimpleTextComponent) o;
-        return Objects.equals(simpleTextComponent, that.simpleTextComponent) && type == that.type;
+        return simpleTextComponent.equals(that.simpleTextComponent) && type == that.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(simpleTextComponent, type);
+        int result = 1;
+        result = 31 * result + simpleTextComponent.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
     }
 
     @Override
