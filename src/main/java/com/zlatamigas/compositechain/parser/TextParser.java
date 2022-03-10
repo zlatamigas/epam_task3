@@ -2,7 +2,7 @@ package com.zlatamigas.compositechain.parser;
 
 import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.TextComponentType;
-import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
+import com.zlatamigas.compositechain.entity.ComplexTextComponent;
 
 public class TextParser extends AbstractParserHandler {
 
