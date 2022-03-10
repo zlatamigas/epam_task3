@@ -72,9 +72,7 @@ public class ComplexTextComponent implements TextComponent {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder(type.getPrefix());
-        for (TextComponent textComponent : components) {
-            sb.append(textComponent);
-        }
+        components.forEach(sb::append);
         sb.append(type.getPostfix());
         return sb.toString();
     }

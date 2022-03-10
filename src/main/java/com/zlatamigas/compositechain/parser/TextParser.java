@@ -6,9 +6,7 @@ import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
 
 public class TextParser extends AbstractParserHandler {
 
-    private static final TextComponentType COMPONENT_TYPE = TextComponentType.PARAGRAPH;
-
-    private static final String PARAGRAPH_DELIMITER = " {4}";
+    private static final String PARAGRAPH_DELIMITER = "\\t";
 
     public TextParser() {
         super(new ParagraphParser());
@@ -20,17 +18,12 @@ public class TextParser extends AbstractParserHandler {
         ComplexTextComponent text = (ComplexTextComponent) component;
         ComplexTextComponent paragraph;
 
-        String[] paragraphStrs = strToParse.split(PARAGRAPH_DELIMITER);
+        String[] paragraphStrs = strToParse.trim().split(PARAGRAPH_DELIMITER);
 
-        if (paragraphStrs.length < 2) {
-            return;
-        }
+        for (String paragraphStr : paragraphStrs) {
 
-
-        for (int i = 1; i < paragraphStrs.length; i++) {
-
-            paragraph = new ComplexTextComponent(COMPONENT_TYPE);
-            successor.handleParse(paragraph, paragraphStrs[i].strip());
+            paragraph = new ComplexTextComponent(TextComponentType.PARAGRAPH);
+            successor.handleParse(paragraph, paragraphStr.strip());
             text.addComponent(paragraph);
         }
     }

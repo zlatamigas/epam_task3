@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 
 public class ParagraphParser extends AbstractParserHandler {
 
-    private static final TextComponentType COMPONENT_TYPE = TextComponentType.SENTENCE;
-
     public static final String SENTENCE_REGEX = "([^.!?]+[.!?])";
 
     public ParagraphParser() {
@@ -29,10 +27,9 @@ public class ParagraphParser extends AbstractParserHandler {
             str = matcher.group(1);
             if (str != null) {
 
-                sentence = new ComplexTextComponent(COMPONENT_TYPE);
+                sentence = new ComplexTextComponent(TextComponentType.SENTENCE);
                 successor.handleParse(sentence, str);
                 paragraph.addComponent(sentence);
-
             }
         }
     }
