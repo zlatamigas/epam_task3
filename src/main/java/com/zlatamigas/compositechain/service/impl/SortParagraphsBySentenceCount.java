@@ -3,11 +3,9 @@ package com.zlatamigas.compositechain.service.impl;
 import com.zlatamigas.compositechain.entity.TextComponent;
 import com.zlatamigas.compositechain.entity.TextComponentType;
 import com.zlatamigas.compositechain.entity.impl.ComplexTextComponent;
-import com.zlatamigas.compositechain.exceptions.CustomTextException;
+import com.zlatamigas.compositechain.exception.CustomTextException;
 import com.zlatamigas.compositechain.service.CustomTextSorter;
 import com.zlatamigas.compositechain.service.comparator.InnerComponentCountComparator;
-
-import java.util.Comparator;
 
 public class SortParagraphsBySentenceCount implements CustomTextSorter {
 

@@ -1,4 +1,4 @@
-package com.zlatamigas.compositechain.exceptions;
+package com.zlatamigas.compositechain.exception;
 
 public class CustomTextException extends Exception{
 

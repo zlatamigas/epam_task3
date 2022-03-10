@@ -1,6 +1,6 @@
 package com.zlatamigas.compositechain.reader.impl;
 
-import com.zlatamigas.compositechain.exceptions.CustomTextException;
+import com.zlatamigas.compositechain.exception.CustomTextException;
 import com.zlatamigas.compositechain.reader.TextReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
