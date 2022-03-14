@@ -14,6 +14,7 @@ public class ComplexTextComponent implements TextComponent {
         components = new ArrayList<>();
     }
 
+    @Override
     public TextComponentType getType() {
         return type;
     }
@@ -24,6 +25,10 @@ public class ComplexTextComponent implements TextComponent {
 
     public List<TextComponent> getComponents() {
         return components;
+    }
+
+    public void setComponents(List<TextComponent> components) {
+        this.components = components;
     }
 
     @Override

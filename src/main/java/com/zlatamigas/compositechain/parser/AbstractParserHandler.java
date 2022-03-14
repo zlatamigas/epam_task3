@@ -6,7 +6,6 @@ public abstract class AbstractParserHandler {
 
     protected AbstractParserHandler successor;
 
-
     public AbstractParserHandler(AbstractParserHandler successor) {
         this.successor = successor;
     }

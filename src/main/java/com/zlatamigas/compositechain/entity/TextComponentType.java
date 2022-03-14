@@ -12,15 +12,17 @@ public enum TextComponentType {
     private String prefix;
     private String postfix;
 
-    TextComponentType(){
+    TextComponentType() {
         prefix = "";
         postfix = "";
     }
-    TextComponentType(String postfix){
+
+    TextComponentType(String postfix) {
         this.prefix = "";
         this.postfix = postfix;
     }
-    TextComponentType(String prefix, String postfix){
+
+    TextComponentType(String prefix, String postfix) {
         this.prefix = prefix;
         this.postfix = postfix;
     }

@@ -16,6 +16,7 @@ public class SimpleTextComponent implements TextComponent {
         return simpleTextComponent;
     }
 
+    @Override
     public TextComponentType getType() {
         return type;
     }

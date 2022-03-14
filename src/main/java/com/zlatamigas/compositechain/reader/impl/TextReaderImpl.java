@@ -37,6 +37,8 @@ public class TextReaderImpl implements TextReader {
             throw new CustomTextException("Error while reading file: " + filepath, e);
         }
 
+        logger.debug("Finished text reading");
+
         return text;
     }
 }

@@ -1,11 +1,15 @@
 package com.zlatamigas.compositechain.interpreter;
 
 import com.zlatamigas.compositechain.expression.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class CalculateArithmeticExpression {
+
+    private static final Logger logger = LogManager.getLogger();
 
     private static final String DIGITS_REGEX = "\\d+";
     private static final String VALUES_DELIMITER = " ";
@@ -14,8 +18,12 @@ public class CalculateArithmeticExpression {
 
     public CalculateArithmeticExpression(String arithmeticExpressionStr) {
         listExpressions = new ArrayList<>();
+
         String polNotation = convertToPolishNotation(arithmeticExpressionStr);
+        logger.debug("Arithmetic expression converted to Polish notation, src: " + arithmeticExpressionStr);
+
         parsePolishNotation(polNotation);
+        logger.debug("Polish notation expression parsed, src: " + arithmeticExpressionStr);
     }
 
     public double calculate() {
@@ -24,8 +32,10 @@ public class CalculateArithmeticExpression {
         for (AbstractArithmeticExpression expression : listExpressions) {
             expression.interpret(valuesStack);
         }
+        double result = valuesStack.pop();
+        logger.debug("Polish notation expression value calculated: " + result);
 
-        return valuesStack.pop();
+        return result;
     }
 
     private String convertToPolishNotation(String arithmeticExpressionStr) {
